@@ -45,3 +45,4 @@ Maximum 5 words per point.
     text = response.text.replace("```json","").replace("```","").strip()
 
     return json.loads(text)
+    report lab
