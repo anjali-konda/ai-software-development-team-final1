@@ -42,7 +42,6 @@ Maximum 5 words per point.
 
     response = model.generate_content(prompt)
 
-    text = response.text.replace("```json","").replace("```","").strip()
+    text = response.text.replace("```json", "").replace("```", "").strip()
 
     return json.loads(text)
-    report lab
