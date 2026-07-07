@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AI Software Development Team</title>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 
 <body>
@@ -21,9 +24,32 @@
 </div>
 
 <div class="card">
+
+<h2>📊 Project Summary</h2>
+
+<p><b>Project Name:</b> {{ requirement }}</p>
+
+<p><b>AI Agents Used:</b> 5</p>
+
+<p><b>Total Modules:</b> 5</p>
+
+<p><b>Estimated Timeline:</b> {{ project_data["Timeline"] }}</p>
+
+<p>
+<b>Status:</b>
+<span style="color:green;font-weight:bold;">
+✅ Analysis Completed Successfully
+</span>
+</p>
+
+</div>
+
+<div class="card">
+
 <h2>1️⃣ Requirement Analyst</h2>
 
 <h3>Functional Requirements</h3>
+
 <ul>
 {% for item in requirement_data["Functional Requirements"] %}
 <li>{{ item }}</li>
@@ -31,14 +57,17 @@
 </ul>
 
 <h3>Non Functional Requirements</h3>
+
 <ul>
 {% for item in requirement_data["Non Functional Requirements"] %}
 <li>{{ item }}</li>
 {% endfor %}
 </ul>
+
 </div>
 
 <div class="card">
+
 <h2>2️⃣ Project Manager</h2>
 
 <p><b>Timeline:</b> {{ project_data["Timeline"] }}</p>
@@ -48,24 +77,39 @@
 <li>{{ item }}</li>
 {% endfor %}
 </ul>
+
 </div>
 
 <div class="card">
+
 <h2>3️⃣ Developer</h2>
 
 <p><b>Frontend:</b> {{ developer_data["Frontend"]|join(", ") }}</p>
+
 <p><b>Backend:</b> {{ developer_data["Backend"]|join(", ") }}</p>
+
 <p><b>Database:</b> {{ developer_data["Database"]|join(", ") }}</p>
 
 </div>
 
 <div class="card">
+
 <h2>4️⃣ QA Tester</h2>
 
 <ul>
+
+{% if tester_data["Test Cases"] is defined %}
 {% for item in tester_data["Test Cases"] %}
 <li>{{ item }}</li>
 {% endfor %}
+{% endif %}
+
+{% if tester_data["TestCases"] is defined %}
+{% for item in tester_data["TestCases"] %}
+<li>{{ item }}</li>
+{% endfor %}
+{% endif %}
+
 </ul>
 
 </div>
@@ -82,9 +126,34 @@
 
 </div>
 
-<a href="/" class="btn">⬅ Analyze Another Project</a>
+<div style="text-align:center;margin-top:30px;">
+
+<a href="/" class="btn">
+⬅ Analyze Another Project
+</a>
+
+<a href="/download" class="btn">
+📄 Download PDF Report
+</a>
+
+</div>
+
+<hr>
+
+<p style="text-align:center;color:gray;">
+
+<b>Developed By</b><br><br>
+
+Anjali Konda<br>
+
+B.Tech Computer Science and Engineering<br>
+
+AI Software Development Team using Flask + Gemini AI
+
+</p>
 
 </div>
 
 </body>
+
 </html>

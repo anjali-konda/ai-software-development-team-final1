@@ -1,35 +1,38 @@
+import os
+import json
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+
 def test(requirement):
 
-    requirement = requirement.lower()
+    prompt = f"""
+You are a Software QA Tester.
 
-    if "student" in requirement:
-        test_cases = [
-            "Verify student registration",
-            "Check login functionality",
-            "Validate attendance records",
-            "Verify marks entry",
-            "Test report generation"
-        ]
+Project:
+{requirement}
 
-    elif "hospital" in requirement:
-        test_cases = [
-            "Verify patient registration",
-            "Check appointment booking",
-            "Validate billing system",
-            "Verify doctor records",
-            "Test medical reports"
-        ]
+Return ONLY valid JSON.
 
-    else:
-        test_cases = [
-            "Verify user login",
-            "Check database connection",
-            "Validate input fields",
-            "Test dashboard",
-            "Generate reports"
-        ]
+{{
+"Test Cases":[
+"Test Case 1",
+"Test Case 2",
+"Test Case 3",
+"Test Case 4",
+"Test Case 5"
+]
+}}
+"""
 
-    return {
-        "Status": "Testing plan prepared successfully",
-        "Test Cases": test_cases
-    }
+    response = model.generate_content(prompt)
+
+    text = response.text.replace("```json","").replace("```","").strip()
+
+    return json.loads(text)

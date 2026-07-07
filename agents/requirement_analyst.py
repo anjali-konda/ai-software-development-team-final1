@@ -1,57 +1,47 @@
+import os
+import json
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+
 def analyze(requirement):
 
-    requirement = requirement.lower()
+    prompt = f"""
+You are a Software Requirement Analyst.
 
-    if "student" in requirement:
-        return {
-            "Functional Requirements": [
-                "Student Registration",
-                "Course Management",
-                "Attendance Management",
-                "Marks Management",
-                "Faculty Management"
-            ],
-            "Non Functional Requirements": [
-                "Security",
-                "Fast Performance",
-                "Scalability",
-                "Reliability",
-                "Easy to Use"
-            ]
-        }
+Project:
+{requirement}
 
-    elif "hospital" in requirement:
-        return {
-            "Functional Requirements": [
-                "Patient Registration",
-                "Doctor Management",
-                "Appointment Booking",
-                "Billing",
-                "Medical Records"
-            ],
-            "Non Functional Requirements": [
-                "High Security",
-                "Fast Response",
-                "Availability",
-                "Scalability",
-                "Reliability"
-            ]
-        }
+Return ONLY valid JSON.
+Keep every point short.
+Maximum 5 words per point.
 
-    else:
-        return {
-            "Functional Requirements":[
-                "User Login",
-                "Dashboard",
-                "Database",
-                "Reports",
-                "Admin Panel"
-            ],
-            "Non Functional Requirements":[
-                "Security",
-                "Performance",
-                "Reliability",
-                "Scalability",
-                "Usability"
-            ]
-        }
+{{
+"Functional Requirements":[
+"...",
+"...",
+"...",
+"...",
+"..."
+],
+"Non Functional Requirements":[
+"...",
+"...",
+"...",
+"...",
+"..."
+]
+}}
+"""
+
+    response = model.generate_content(prompt)
+
+    text = response.text.replace("```json","").replace("```","").strip()
+
+    return json.loads(text)

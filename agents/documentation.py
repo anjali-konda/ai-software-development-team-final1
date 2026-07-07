@@ -1,35 +1,38 @@
+import os
+import json
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+
 def document(requirement):
 
-    requirement = requirement.lower()
+    prompt = f"""
+You are a Software Documentation Expert.
 
-    if "student" in requirement:
-        documents = [
-            "Software Requirement Specification (SRS)",
-            "System Design Document",
-            "User Manual",
-            "Test Plan",
-            "Project Report"
-        ]
+Project:
+{requirement}
 
-    elif "hospital" in requirement:
-        documents = [
-            "Software Requirement Specification (SRS)",
-            "Database Design Document",
-            "User Manual",
-            "Test Report",
-            "Project Report"
-        ]
+Return ONLY valid JSON.
 
-    else:
-        documents = [
-            "Software Requirement Specification (SRS)",
-            "Design Document",
-            "User Manual",
-            "Testing Report",
-            "Project Report"
-        ]
+{{
+"Documents":[
+"Software Requirement Specification (SRS)",
+"System Design Document",
+"Database Design Document",
+"Test Plan",
+"User Manual"
+]
+}}
+"""
 
-    return {
-        "Status": "Documentation completed successfully",
-        "Documents": documents
-    }
+    response = model.generate_content(prompt)
+
+    text = response.text.replace("```json", "").replace("```", "").strip()
+
+    return json.loads(text)

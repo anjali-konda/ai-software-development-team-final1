@@ -1,24 +1,42 @@
+import os
+import json
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+
 def develop(requirement):
 
-    requirement = requirement.lower()
+    prompt = f"""
+You are a Senior Software Developer.
 
-    if "student" in requirement:
-        return {
-            "Frontend": ["HTML", "CSS", "JavaScript", "Bootstrap"],
-            "Backend": ["Python", "Flask"],
-            "Database": ["SQLite"]
-        }
+Project:
+{requirement}
 
-    elif "hospital" in requirement:
-        return {
-            "Frontend": ["HTML", "CSS", "Bootstrap"],
-            "Backend": ["Python", "Flask"],
-            "Database": ["MySQL"]
-        }
+Return ONLY valid JSON.
 
-    else:
-        return {
-            "Frontend": ["HTML", "CSS"],
-            "Backend": ["Python"],
-            "Database": ["SQLite"]
-        }
+{{
+  "Frontend": [
+    "Technology 1",
+    "Technology 2"
+  ],
+  "Backend": [
+    "Technology 1",
+    "Technology 2"
+  ],
+  "Database": [
+    "Database Technology"
+  ]
+}}
+"""
+
+    response = model.generate_content(prompt)
+
+    text = response.text.replace("```json", "").replace("```", "").strip()
+
+    return json.loads(text)

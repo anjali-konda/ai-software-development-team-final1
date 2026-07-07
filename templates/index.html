@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>AI Software Development Team</title>
@@ -21,15 +20,15 @@
 
 <div class="row justify-content-center">
 
-<div class="col-md-8">
+<div class="col-lg-8">
 
 <div class="card shadow-lg p-5">
 
-<h1 class="text-center text-primary mb-4">
+<h1 class="text-center text-primary mb-3">
 🤖 AI Software Development Team
 </h1>
 
-<p class="text-center text-muted">
+<p class="text-center text-muted mb-4">
 Enter your software project requirement below.
 </p>
 
@@ -37,11 +36,12 @@ Enter your software project requirement below.
 
 <div class="mb-3">
 
-<label class="form-label">
+<label class="form-label fw-bold">
 Project Requirement
 </label>
 
 <textarea
+id="requirement"
 class="form-control"
 rows="6"
 name="requirement"
@@ -50,9 +50,46 @@ required></textarea>
 
 </div>
 
+<div class="mb-4">
+
+<p class="fw-bold text-primary">
+Try Sample Projects
+</p>
+
+<div class="d-flex flex-wrap gap-2">
+
+<button type="button" class="btn btn-outline-primary"
+onclick="setProject('Online Food Delivery System')">
+🍔 Food Delivery
+</button>
+
+<button type="button" class="btn btn-outline-success"
+onclick="setProject('Hospital Management System')">
+🏥 Hospital
+</button>
+
+<button type="button" class="btn btn-outline-warning"
+onclick="setProject('College Management System')">
+🎓 College
+</button>
+
+<button type="button" class="btn btn-outline-danger"
+onclick="setProject('Library Management System')">
+📚 Library
+</button>
+
+<button type="button" class="btn btn-outline-info"
+onclick="setProject('Hotel Booking System')">
+🏨 Hotel
+</button>
+
+</div>
+
+</div>
+
 <div class="d-grid">
 
-<button type="submit" class="btn btn-primary btn-lg">
+<button id="analyzeBtn" type="submit" class="btn btn-primary btn-lg">
 🚀 Analyze Requirement
 </button>
 
@@ -67,6 +104,23 @@ required></textarea>
 </div>
 
 </div>
+
+<script>
+
+function setProject(project){
+document.getElementById("requirement").value = project;
+}
+
+document.querySelector("form").addEventListener("submit",function(){
+
+document.getElementById("analyzeBtn").innerHTML =
+"⏳ AI Agents are analyzing...";
+
+document.getElementById("analyzeBtn").disabled = true;
+
+});
+
+</script>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 

@@ -1,39 +1,39 @@
+import os
+import json
+import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+
+model = genai.GenerativeModel("gemini-2.5-flash")
+
+
 def plan(requirement):
 
-    requirement = requirement.lower()
+    prompt = f"""
+You are a Software Project Manager.
 
-    if "student" in requirement:
-        return {
-            "Timeline": "12 Weeks",
-            "Modules": [
-                "Student Registration",
-                "Course Management",
-                "Attendance Management",
-                "Marks Management",
-                "Report Generation"
-            ]
-        }
+Project:
+{requirement}
 
-    elif "hospital" in requirement:
-        return {
-            "Timeline": "16 Weeks",
-            "Modules": [
-                "Patient Registration",
-                "Doctor Management",
-                "Appointment Booking",
-                "Billing System",
-                "Medical Records"
-            ]
-        }
+Return ONLY valid JSON.
 
-    else:
-        return {
-            "Timeline": "10 Weeks",
-            "Modules": [
-                "Authentication",
-                "Dashboard",
-                "Database",
-                "Reports",
-                "Settings"
-            ]
-        }
+{{
+  "Timeline":"12 Weeks",
+  "Modules":[
+    "Module 1",
+    "Module 2",
+    "Module 3",
+    "Module 4",
+    "Module 5"
+  ]
+}}
+"""
+
+    response = model.generate_content(prompt)
+
+    text = response.text.replace("```json", "").replace("```", "").strip()
+
+    return json.loads(text)
