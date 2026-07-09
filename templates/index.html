@@ -14,13 +14,13 @@
 
 </head>
 
-<body class="bg-light">
+<body>
 
 <div class="container mt-5">
 
 <div class="row justify-content-center">
 
-<div class="col-lg-8">
+<div class="col-lg-9">
 
 <div class="card shadow-lg p-5">
 
@@ -29,15 +29,15 @@
 </h1>
 
 <p class="text-center text-muted mb-4">
-Enter your software project requirement below.
+Generate complete software planning using AI Agents.
 </p>
 
 <form action="/analyze" method="POST">
 
-<div class="mb-3">
+<div class="mb-4">
 
-<label class="form-label fw-bold">
-Project Requirement
+<label class="form-label fw-bold fs-5">
+📋 Project Requirement
 </label>
 
 <textarea
@@ -52,9 +52,9 @@ required></textarea>
 
 <div class="mb-4">
 
-<p class="fw-bold text-primary">
-Try Sample Projects
-</p>
+<h5 class="text-primary">
+🚀 Try Sample Projects
+</h5>
 
 <div class="d-flex flex-wrap gap-2">
 
@@ -89,8 +89,12 @@ onclick="setProject('Hotel Booking System')">
 
 <div class="d-grid">
 
-<button id="analyzeBtn" type="submit" class="btn btn-primary btn-lg">
+<button id="analyzeBtn"
+type="submit"
+class="btn btn-primary btn-lg">
+
 🚀 Analyze Requirement
+
 </button>
 
 </div>
@@ -105,18 +109,73 @@ onclick="setProject('Hotel Booking System')">
 
 </div>
 
+
+<!-- Loading Screen -->
+
+<div id="loadingScreen">
+
+<div class="loading-box">
+
+<h2>🤖 AI Agents Working...</h2>
+
+<p id="status">📋 Requirement Analyst...</p>
+
+<div class="spinner"></div>
+
+<p>Please wait while AI generates your project.</p>
+
+</div>
+
+</div>
+
+
 <script>
 
 function setProject(project){
-document.getElementById("requirement").value = project;
+
+document.getElementById("requirement").value=project;
+
 }
 
 document.querySelector("form").addEventListener("submit",function(){
 
-document.getElementById("analyzeBtn").innerHTML =
-"⏳ AI Agents are analyzing...";
+document.getElementById("loadingScreen").style.display="flex";
 
-document.getElementById("analyzeBtn").disabled = true;
+const status=document.getElementById("status");
+
+const steps=[
+
+"📋 Requirement Analyst ✔",
+
+"📅 Project Manager ✔",
+
+"💻 Developer ✔",
+
+"🧪 QA Tester ✔",
+
+"📄 Documentation Agent ✔"
+
+];
+
+let i=0;
+
+const timer=setInterval(function(){
+
+if(i<steps.length){
+
+status.innerHTML=steps[i];
+
+i++;
+
+}
+
+else{
+
+clearInterval(timer);
+
+}
+
+},700);
 
 });
 

@@ -51,6 +51,12 @@ def analyze_project():
         "documentation_data": documentation_data
     }
 
+    print(requirement_data)
+    print(project_data)
+    print(developer_data)
+    print(tester_data)
+    print(documentation_data)
+
     return render_template(
         "result.html",
         requirement=requirement,
@@ -68,7 +74,6 @@ def download():
     global latest_report
 
     buffer = BytesIO()
-
     pdf = canvas.Canvas(buffer)
 
     y = 800
@@ -81,7 +86,6 @@ def download():
     y -= 40
 
     pdf.setFont("Helvetica", 12)
-
     pdf.drawString(
         50,
         y,
@@ -102,6 +106,7 @@ def download():
     pdf.drawString(50, y, "Modules")
 
     y -= 25
+
     pdf.setFont("Helvetica", 12)
 
     for module in latest_report["project_data"]["Modules"]:
